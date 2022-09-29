@@ -37,19 +37,53 @@ df_sub = df %>%
 
 ```{r}
 # set up the data such that everything needed has generic names
-# recode treatment: dark as 0 and bright as 1
+# re-code treatment: dark as 0 and bright as 1
 df_setup = df_sub %>% 
   select("light", "bm_gain") %>% 
   rename(A = light,
          Y = bm_gain) %>% 
   mutate(A = case_when(A == "LD" ~ 0,
-                       A == "LL" ~ 1))
+                       A == "LL" ~ 1)) %>% 
+  arrange(desc(A))
 ```
 
 
 ```{r}
 # calculate the difference in means between the two treatment groups
-avg_y1 = mean(df_setup$Y)
-#t_obs = average(df_setup$)
+y0 = data.frame(df_setup %>% 
+                filter(A == 0) %>% 
+                select(Y))
+
+avg_y0 = mean(y0$Y)
+round(avg_y0, 2)
+
+y1 = data.frame(df_setup %>% 
+                filter(A == 1) %>% 
+                select(Y))
+
+avg_y1 = mean(y1$Y)
+round(avg_y1, 2)
+
+t_obs = round(avg_y1 - avg_y0, 2)
+t_obs
+```
+
+```{r}
+# enumerate different possibilities for A in a matrix
+Abold = genperms(df_setup$A, maxiter = 24310)
+
+Abold[, 1:15]
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
 ```
 

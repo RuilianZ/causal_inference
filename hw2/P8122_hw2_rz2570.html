@@ -195,16 +195,72 @@ ggplot(data = df, aes(x = light, y = bm_gain)) +
 df_sub = df %&gt;% 
   filter(light != &quot;DM&quot;)</code></pre>
 <pre class="r"><code># set up the data such that everything needed has generic names
-# recode treatment: dark as 0 and bright as 1
+# re-code treatment: dark as 0 and bright as 1
 df_setup = df_sub %&gt;% 
   select(&quot;light&quot;, &quot;bm_gain&quot;) %&gt;% 
   rename(A = light,
          Y = bm_gain) %&gt;% 
   mutate(A = case_when(A == &quot;LD&quot; ~ 0,
-                       A == &quot;LL&quot; ~ 1))</code></pre>
+                       A == &quot;LL&quot; ~ 1)) %&gt;% 
+  arrange(desc(A))</code></pre>
 <pre class="r"><code># calculate the difference in means between the two treatment groups
-avg_y1 = mean(df_setup$Y)
-#t_obs = average(df_setup$)</code></pre>
+y0 = data.frame(df_setup %&gt;% 
+                filter(A == 0) %&gt;% 
+                select(Y))
+
+avg_y0 = mean(y0$Y)
+round(avg_y0, 2)</code></pre>
+<pre><code>## [1] 5.93</code></pre>
+<pre class="r"><code>y1 = data.frame(df_setup %&gt;% 
+                filter(A == 1) %&gt;% 
+                select(Y))
+
+avg_y1 = mean(y1$Y)
+round(avg_y1, 2)</code></pre>
+<pre><code>## [1] 11.01</code></pre>
+<pre class="r"><code>t_obs = round(avg_y1 - avg_y0, 2)
+t_obs</code></pre>
+<pre><code>## [1] 5.08</code></pre>
+<pre class="r"><code># enumerate different possibilities for A in a matrix
+Abold = genperms(df_setup$A, maxiter = 24310)
+
+Abold[, 1:15]</code></pre>
+<pre><code>##    [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+## 1     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 2     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 3     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 4     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 5     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 6     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 7     1    1    1    1    1    1    1    1    1     1     1     1     1     1
+## 8     1    1    1    1    1    1    1    1    1     0     0     0     0     0
+## 9     1    0    0    0    0    0    0    0    0     1     1     1     1     1
+## 10    0    1    0    0    0    0    0    0    0     1     0     0     0     0
+## 11    0    0    1    0    0    0    0    0    0     0     1     0     0     0
+## 12    0    0    0    1    0    0    0    0    0     0     0     1     0     0
+## 13    0    0    0    0    1    0    0    0    0     0     0     0     1     0
+## 14    0    0    0    0    0    1    0    0    0     0     0     0     0     1
+## 15    0    0    0    0    0    0    1    0    0     0     0     0     0     0
+## 16    0    0    0    0    0    0    0    1    0     0     0     0     0     0
+## 17    0    0    0    0    0    0    0    0    1     0     0     0     0     0
+##    [,15]
+## 1      1
+## 2      1
+## 3      1
+## 4      1
+## 5      1
+## 6      1
+## 7      1
+## 8      0
+## 9      1
+## 10     0
+## 11     0
+## 12     0
+## 13     0
+## 14     0
+## 15     1
+## 16     0
+## 17     0</code></pre>
 
 
 
