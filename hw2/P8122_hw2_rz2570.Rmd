@@ -28,10 +28,19 @@ ggplot(data = df, aes(x = light, y = bm_gain)) +
 ```
 
 ```{r}
+# only interested in mice exposed to darkness and bright
+# subset the data into two groups
+df_sub = df %>% 
+  filter(light != "DM")
 ```
 
 
 ```{r}
+# set up the data such that everything needed has generic names 
+df_setup = df_sub %>% 
+  select("light", "bm_gain") %>% 
+  rename(A = light,
+         Y = bm_gain)
 ```
 
 
