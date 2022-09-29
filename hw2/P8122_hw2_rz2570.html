@@ -194,11 +194,17 @@ ggplot(data = df, aes(x = light, y = bm_gain)) +
 # subset the data into two groups
 df_sub = df %&gt;% 
   filter(light != &quot;DM&quot;)</code></pre>
-<pre class="r"><code># set up the data such that everything needed has generic names 
+<pre class="r"><code># set up the data such that everything needed has generic names
+# recode treatment: dark as 0 and bright as 1
 df_setup = df_sub %&gt;% 
   select(&quot;light&quot;, &quot;bm_gain&quot;) %&gt;% 
   rename(A = light,
-         Y = bm_gain)</code></pre>
+         Y = bm_gain) %&gt;% 
+  mutate(A = case_when(A == &quot;LD&quot; ~ 0,
+                       A == &quot;LL&quot; ~ 1))</code></pre>
+<pre class="r"><code># calculate the difference in means between the two treatment groups
+avg_y1 = mean(df_setup$Y)
+#t_obs = average(df_setup$)</code></pre>
 
 
 

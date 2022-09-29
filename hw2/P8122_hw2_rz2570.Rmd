@@ -36,14 +36,20 @@ df_sub = df %>%
 
 
 ```{r}
-# set up the data such that everything needed has generic names 
+# set up the data such that everything needed has generic names
+# recode treatment: dark as 0 and bright as 1
 df_setup = df_sub %>% 
   select("light", "bm_gain") %>% 
   rename(A = light,
-         Y = bm_gain)
+         Y = bm_gain) %>% 
+  mutate(A = case_when(A == "LD" ~ 0,
+                       A == "LL" ~ 1))
 ```
 
 
 ```{r}
+# calculate the difference in means between the two treatment groups
+avg_y1 = mean(df_setup$Y)
+#t_obs = average(df_setup$)
 ```
 
