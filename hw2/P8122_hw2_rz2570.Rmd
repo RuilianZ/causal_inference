@@ -6,6 +6,35 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# install ri from local file
+#library(devtools)
+#install_local("~/Desktop/P8122/causal_inference/hw2/ri_0.9.tar.gz")
+
+library(ri)
+library(tidyverse)
+```
+
+```{r}
+# read and clean data
+df = read_csv("~/Desktop/P8122/causal_inference/hw2/light.csv") %>% 
+  janitor::clean_names()
+```
+
+
+```{r}
+# plot the outcome by treatment group
+ggplot(data = df, aes(x = light, y = bm_gain)) +
+  geom_bar(stat = "identity")
+```
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
 ```
 
