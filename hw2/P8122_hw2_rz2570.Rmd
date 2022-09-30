@@ -69,6 +69,9 @@ t_obs
 
 ```{r}
 # enumerate different possibilities for A in a matrix
+A = c(rep(1, 9), rep(0, 10))
+Y = df_setup$Y
+
 Abold = genperms(df_setup$A, maxiter = 30000)
 
 Abold[, 1:15]

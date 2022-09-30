@@ -221,6 +221,9 @@ round(avg_y1, 2)</code></pre>
 t_obs</code></pre>
 <pre><code>## [1] 5.08</code></pre>
 <pre class="r"><code># enumerate different possibilities for A in a matrix
+A = c(rep(1, 9), rep(0, 10))
+Y = df_setup$Y
+
 Abold = genperms(df_setup$A, maxiter = 30000)
 
 Abold[, 1:15]</code></pre>
